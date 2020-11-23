@@ -118,7 +118,9 @@ class SerialController extends Controller
     }
 
     public function check(Request $request){
-        $check = Serial::where('serialCode',$request->serialCode)->where('serialNumber',$request->serialNumber)->first();
+        $check = Serial::where('serialCode',$request->serialCode)->first();
+        // $check = Serial::where('serialCode',$request->serialCode)->where('serialNumber',$request->serialNumber)->first();
+
         if(!$check){
             return redirect('/')->with('failed', 'Serial do not match');
             return 'Please re-enter the serial correctly';

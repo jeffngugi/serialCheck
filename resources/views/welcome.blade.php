@@ -56,10 +56,10 @@
   @endif
     <form method="post" action="{{route('chck-serial')}}">
     @csrf
-  <div class="form-group">
+  <!-- <div class="form-group">
     <label>Serial Number</label>
     <input type="text" class="form-control" name="serialNumber">
-  </div>
+  </div> -->
   <div class="form-group">
     <label >Serial Code</label>
     <input type="text" class="form-control" name="serialCode">
