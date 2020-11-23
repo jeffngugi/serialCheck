@@ -37,36 +37,11 @@
                 </div>
             @endif
 
-            <div>
-                <h2>
-                Simple code checker
-                </h2>
-                <div>
-  
+            @yield('content');
     </div>
-    @if(session()->get('success'))
-    <div class="alert alert-success">
-      {{ session()->get('success') }}  
-    </div>
-  @endif
-  @if(session()->get('failed'))
-    <div class="alert alert-danger">
-      {{ session()->get('failed') }}  
-    </div>
-  @endif
-    <form method="post" action="{{route('chck-serial')}}">
-    @csrf
-  <div class="form-group">
-    <label>Serial Number</label>
-    <input type="text" class="form-control" name="serialNumber">
-  </div>
-  <div class="form-group">
-    <label >Serial Code</label>
-    <input type="text" class="form-control" name="serialCode">
-  </div>
-  
-  <button type="submit" class="btn btn-primary">Submit</button>
-</form>
+
+        
+
     </body>
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ho+j7jyWK8fNQe+A12Hb8AhRq26LrZ/JpcUGGOn+Y7RsweNrtN/tE3MoK7ZeZDyx" crossorigin="anonymous"></script>

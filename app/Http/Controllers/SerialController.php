@@ -14,7 +14,10 @@ class SerialController extends Controller
      */
     public function index()
     {
-        //
+        $serials = Serial::all();
+        // return view('serial.index')->with('serails',$serials);
+        $serials = Serial::paginate(50);
+        return view('serial.index', compact('serials'));
     }
 
     /**
@@ -37,12 +40,7 @@ class SerialController extends Controller
     {
 
        
-        
-        // $number = mt_rand(1000000000, 9999999999);
-        // return $number;
-        // return $this->genSerial();
-
-        // $last = Serial::latest();
+        // return 'serial to be generated;';
         $last = Serial::all()->last();
         if(!$last){
             $sNumber = 0;
@@ -65,7 +63,8 @@ class SerialController extends Controller
         // return $serials;
         $serialEntry = Serial::insert($serials);
         if($serialEntry){
-            return 'Serials generated succesfully';
+            // return 'Serials generated succesfully';
+            return redirect('/dashboard')->with('success', 'Serials generated succesfully');
         }
         
        
@@ -121,27 +120,25 @@ class SerialController extends Controller
     public function check(Request $request){
         $check = Serial::where('serialCode',$request->serialCode)->where('serialNumber',$request->serialNumber)->first();
         if(!$check){
+            return redirect('/')->with('failed', 'Serial do not match');
             return 'Please re-enter the serial correctly';
         }
 
         if($check->checked){
-            return 'serial number already used';
+            return redirect('/')->with('failed', 'Serial number already used');
         }
 
         if(!$check->checked){
-            // return 'serial success';
             $check->checked = true;
             $save = $check->save();
             if($save){
-                return 'saved succesfully';
+                return redirect('/')->with('success', 'Success, serial verified');
             }
         }else{
-            return 'Serial was already verfied';
+            return redirect('/')->with('failed', 'Serial number already used');
         }
 
-        return $check;
-        return $request;
-        return 'check serial codes';
+       
     }
 
     
