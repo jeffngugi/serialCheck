@@ -21,3 +21,6 @@ Route::middleware(['auth:sanctum', 'verified'])->get('/dashboard', [SerialContro
 
 Route::post('/chck-serial', [SerialController::class,'check'])->name('chck-serial');
 Route::resource('serials', SerialController::class);
+Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+
+Auth::routes();

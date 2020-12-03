@@ -28,18 +28,18 @@
             <table class="table table-bordered mb-5">
                 <thead>
                     <tr class="table-success">
-                        <th scope="col">#</th>
-                        <th scope="col">serial Code</th>
+                        <th scope="col">Pin Number</th>
                         <th scope="col">Serial Number</th>
+                        <th scope="col">Check Code</th>
                         <th scope="col">Status</th>
                     </tr>
                 </thead>
                 <tbody>
                     @foreach($serials as $data)
                     <tr>
-                        <th scope="row">{{ $data->id }}</th>
-                        <td>{{ $data->serialCode }}</td>
+                        <td>{{ $data->pinNumber }}</td>
                         <td>{{ $data->serialNumber }}</td>
+                        <td>{{ $data->checkCode }}</td>
                         <!-- <td>{{ $data->checked }}</td> -->
                         <td> {{ $data->checked ? 'used' : 'un-used'}}</td>
                     </tr>

@@ -17,7 +17,7 @@ class SerialController extends Controller
         $serials = Serial::all();
         // return view('serial.index')->with('serails',$serials);
         $serials = Serial::paginate(50);
-        return view('serial.index', compact('serials'));
+        return view('home', compact('serials'));
     }
 
     /**
@@ -43,24 +43,25 @@ class SerialController extends Controller
         // return 'serial to be generated;';
         $last = Serial::all()->last();
         if(!$last){
-            $sNumber = 0;
+            $sNumber = 1000000000;
         }else{
-        $sNumber = $last->serialNumber;
+        $sNumber = $last->pinNumber;
         }
-        $count = 200;
+        $count = 2;
         $size =12;
         $append = '202';
         $appendNo = '10';
         $serials = [];
         for($i = 0; $i < $count; $i++){
-            $serialCode = mt_rand(1000000000, 9999999999);
-            // $serialCode = strtoupper(substr(md5(time().rand(10000,99999)), 0, $size));
-            $serialArr['serialCode'] = intval($append.$serialCode);
-            $serialArr['serialNumber'] = $i + $sNumber + 1;
+            $serialNumber = mt_rand(1000000000, 9999999999);
+            // $serialNumber = strtoupper(substr(md5(time().rand(10000,99999)), 0, $size));
+            $serialArr['serialNumber'] = intval($append.$serialNumber);
+            $serialArr['pinNumber'] = $i + $sNumber;
+            $serialArr['checkCode'] = mt_rand(10000,99999);
             array_push($serials, $serialArr);
             
         }
-        // return $serials;
+        return $serials;
         $serialEntry = Serial::insert($serials);
         if($serialEntry){
             // return 'Serials generated succesfully';
@@ -118,8 +119,8 @@ class SerialController extends Controller
     }
 
     public function check(Request $request){
-        $check = Serial::where('serialCode',$request->serialCode)->first();
-        // $check = Serial::where('serialCode',$request->serialCode)->where('serialNumber',$request->serialNumber)->first();
+        $check = Serial::where('serial',$request->serialNumber)->first();
+        // $check = Serial::where('serialNumber',$request->serialNumber)->where('pinNumber',$request->pinNumber)->first();
 
         if(!$check){
             return redirect('/')->with('failed', 'Serial do not match');
