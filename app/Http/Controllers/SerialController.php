@@ -16,8 +16,10 @@ class SerialController extends Controller
     {
         $serials = Serial::all();
         // return view('serial.index')->with('serails',$serials);
-        $serials = Serial::paginate(50);
-        return view('home', compact('serials'));
+        // $serials = Serial::paginate(50);
+        $totalSerials = Serial::count();
+        // return $totalSerials;
+        return view('serials.index')->with('totalSerials', $totalSerials);
     }
 
     /**
@@ -27,7 +29,7 @@ class SerialController extends Controller
      */
     public function create()
     {
-        return 'create serial codes';
+        return view('serials.index');
     }
 
     /**
@@ -39,6 +41,9 @@ class SerialController extends Controller
     public function store(Request $request)
     {
 
+        
+
+        
        
         // return 'serial to be generated;';
         $last = Serial::all()->last();
@@ -47,7 +52,7 @@ class SerialController extends Controller
         }else{
         $sNumber = $last->pinNumber;
         }
-        $count = 2;
+        $count = $request->count;;
         $size =12;
         $append = '202';
         $appendNo = '10';
@@ -61,11 +66,11 @@ class SerialController extends Controller
             array_push($serials, $serialArr);
             
         }
-        return $serials;
+        // return $serials;
         $serialEntry = Serial::insert($serials);
         if($serialEntry){
             // return 'Serials generated succesfully';
-            return redirect('/dashboard')->with('success', 'Serials generated succesfully');
+            return redirect('/serials')->with('success', 'Serials generated succesfully');
         }
         
        
@@ -119,7 +124,7 @@ class SerialController extends Controller
     }
 
     public function check(Request $request){
-        $check = Serial::where('serial',$request->serialNumber)->first();
+        $check = Serial::where('serialNumber',$request->serialNumber)->first();
         // $check = Serial::where('serialNumber',$request->serialNumber)->where('pinNumber',$request->pinNumber)->first();
 
         if(!$check){

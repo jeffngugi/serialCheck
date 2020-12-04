@@ -62,7 +62,7 @@
   </div> -->
   <div class="form-group">
     <label >Serial Code</label>
-    <input type="text" class="form-control" name="serialCode">
+    <input type="text" class="form-control" name="serialNumber">
   </div>
   
   <button type="submit" class="btn btn-primary">Submit</button>
