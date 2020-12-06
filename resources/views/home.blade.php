@@ -9,7 +9,7 @@
             <div class="small-box bg-info">
               <div class="inner">
                 <!-- <h3>$totalSerials </h3> -->
-                <h3>1000000000</h3>
+                <h3>1,000,000,000</h3>
                 <p>Generated Serials</p>
               </div>
               <div class="icon">
