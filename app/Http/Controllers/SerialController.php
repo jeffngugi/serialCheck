@@ -40,7 +40,7 @@ class SerialController extends Controller
      */
     public function store(Request $request)
     {
-
+// return 'jefff';
         
 
         

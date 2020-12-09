@@ -2,11 +2,12 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Role;
 use Illuminate\Http\Request;
+use App\Models\User;
+use App\Models\Role;
 use Illuminate\Support\Facades\Validator;
 
-class RoleController extends Controller
+class UserController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -15,8 +16,9 @@ class RoleController extends Controller
      */
     public function index()
     {
-        $roles = Role::all();
-        return view('roles.index')->with('roles', $roles);
+        $users = User::all();
+        // return $users;
+        return view('users.index')->with('users', $users);
     }
 
     /**
@@ -26,7 +28,9 @@ class RoleController extends Controller
      */
     public function create()
     {
-        return view('roles.create');
+        $roles = Role::all();
+        return view('users.create')->with('roles', $roles);
+        return view('users.create');
     }
 
     /**
@@ -38,9 +42,11 @@ class RoleController extends Controller
     public function store(Request $request)
     {
         $validator = Validator::make($request->all(), [
-            'name' => 'required|string|max:100',
-            'code'=>'required|string',
-            'description'=>'string|min:10|max:120',
+            'name' => ['required', 'string', 'max:255'],
+            'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
+            'password' => ['required', 'string', 'min:8',],
+            'role_id' => ['required', 'integer',],
+            
             
         ]);
         if($validator->fails()){
@@ -50,30 +56,30 @@ class RoleController extends Controller
         }
         $data = $request->all();
         // return $data;
-        $role = Role::create($data);
-        if($role){
-            return redirect('roles')->with('success','Role successfully created');
+        $user = User::create($data);
+        if($user){
+            return redirect('users')->with('success','User added successfully');
         }
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\Role  $role
+     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show(Role $role)
+    public function show($id)
     {
-        //
+        return view('users.show');
     }
 
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Models\Role  $role
+     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit(Role $role)
+    public function edit($id)
     {
         //
     }
@@ -82,10 +88,10 @@ class RoleController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Role  $role
+     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Role $role)
+    public function update(Request $request, $id)
     {
         //
     }
@@ -93,10 +99,10 @@ class RoleController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\Role  $role
+     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Role $role)
+    public function destroy($id)
     {
         //
     }
