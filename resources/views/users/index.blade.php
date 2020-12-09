@@ -24,7 +24,7 @@
                     <td>{{$data->id}}</td>
                     <td>{{$data->name}}</td>
                     <td>{{$data->email}}</td>
-                    <td>{{$data->role->name}}</td>
+                    <td>{{$data->role->name ? no roles}}</td>
                     <td class="project-actions text-center">
                     <a class="btn btn-primary btn-sm" href="{{ route('users.show', [$data->id]) }}">
                               <i class="fas fa-folder">
