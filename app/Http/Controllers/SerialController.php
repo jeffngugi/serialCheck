@@ -124,7 +124,8 @@ class SerialController extends Controller
     }
 
     public function check(Request $request){
-        $check = Serial::where('serialNumber',$request->serialNumber)->first();
+        $check = Serial::where('serialNumber',$request->serialNumber)->whereNotNull('lotNumber')->first();
+        // $check = Serial::where('serialNumber',$request->serialNumber)->first();
         // $check = Serial::where('serialNumber',$request->serialNumber)->where('pinNumber',$request->pinNumber)->first();
 
         if(!$check){
@@ -148,6 +149,15 @@ class SerialController extends Controller
 
        
     }
+
+    public function print(){
+        return view('serials.print');
+    }
+
+    public function assign(){
+        return view('serials.assign');
+    }
+
 
     
 

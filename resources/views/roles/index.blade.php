@@ -38,7 +38,7 @@
                      <td>{{$data->code}}</td>
                       <td>{{$data->description}}</td>
                       <td>
-                      <a class="btn btn-primary btn-sm" href="{{ route('roles.show', [$data->id]) }}">
+                      <a class="btn btn-primary btn-sm" data-name="{{$data->name}}" data-code="$data->code" data-description="{{$data->description}}" type="" data-toggle="modal" data-target="#view-role">
                               <i class="fas fa-folder">
                               </i>
                               View
@@ -53,6 +53,7 @@
                               </i>
                               Delete
                           </a>
+                          
                           </td>
                     </tr>
                     @endforeach
@@ -65,5 +66,29 @@
             <!-- /.card -->
           </div>
         </div>
+        <div class="modal fade" id="view-role">
+        <div class="modal-dialog modal-lg">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h4 class="modal-title">Role Details</h4>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div class="modal-body">
+              <p>Name :</p>
+              <p>Description : </p>
+              <p>Code : </p>
+              <p></p>
+            </div>
+            <div class="modal-footer justify-content-between">
+              <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+            </div>
+          </div>
+          <!-- /.modal-content -->
+        </div>
+        <!-- /.modal-dialog -->
+      </div>
+      <!-- /.modal -->
 
 @endsection

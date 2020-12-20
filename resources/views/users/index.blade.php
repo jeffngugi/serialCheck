@@ -47,6 +47,7 @@
                               </i>
                               Delete
                           </a>
+                          
                     </td>
                   </tr>
                   @endforeach
