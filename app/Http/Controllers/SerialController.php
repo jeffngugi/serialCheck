@@ -154,6 +154,11 @@ class SerialController extends Controller
         return view('serials.print');
     }
 
+    public function printCode(Request $request){
+        return $request;
+        return 'logics to print codes';
+    }
+
     public function assign(){
         return view('serials.assign');
     }
