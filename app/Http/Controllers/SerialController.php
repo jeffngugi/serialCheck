@@ -1,8 +1,12 @@
 <?php
 
 namespace App\Http\Controllers;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Validator;
+
 
 use App\Models\Serial;
+use App\Models\Lot;
 use Illuminate\Http\Request;
 
 class SerialController extends Controller
@@ -40,11 +44,6 @@ class SerialController extends Controller
      */
     public function store(Request $request)
     {
-// return 'jefff';
-        
-
-        
-       
         // return 'serial to be generated;';
         $last = Serial::all()->last();
         if(!$last){
@@ -155,7 +154,38 @@ class SerialController extends Controller
     }
 
     public function printCode(Request $request){
-        return $request;
+        // validate data from the input
+        $validator = Validator::make($request->all(), [
+            'package' => 'required|integer',
+            'lot_no'=>'required|string',
+            'count'=>'required|integer',
+            'manufacture_date'=>'required'
+            
+        ]);
+        if($validator->fails()){
+            $errors =  $validator->messages();
+            // return $errors;
+            return back()->with('errors',$errors);
+        }
+
+
+        $count = $request->count;
+        // $last = Serial::whereNull('lotNumber')->get();
+        $last = Serial::all()->whereNull('lotNumber')->first();
+        $upto =  $last->id + $count  ;
+        // return $last->id;
+        // return gettype($last->id);
+        // return $upto;
+        // $update = Serial::where('id', '>=', $last->id)
+        //                 ->where('id', '<', $upto )
+        //                 ->get();
+        $update = Serial::whereBetween('id', [$last->id, $upto - 1])->get();
+        // $update = Serial::where
+
+        return $update;
+        
+
+        return $last;
         return 'logics to print codes';
     }
 
