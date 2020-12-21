@@ -150,39 +150,44 @@ class SerialController extends Controller
     }
 
     public function print(){
-        return view('serials.print');
+        $lots = Lot::all();
+        return view('serials.print')->with('lots', $lots);
     }
 
     public function printCode(Request $request){
+        $request['manufacture_date']= date("Y-m-d", strtotime($request->manufacture_date));
+        // return $request->all();
         // validate data from the input
         $validator = Validator::make($request->all(), [
             'package' => 'required|integer',
             'lot_no'=>'required|string',
             'count'=>'required|integer',
-            'manufacture_date'=>'required'
+            'manufacture_date'=>'required|date'
+
             
         ]);
         if($validator->fails()){
             $errors =  $validator->messages();
-            // return $errors;
             return back()->with('errors',$errors);
         }
 
-
+        // return $request->all();
         $count = $request->count;
-        // $last = Serial::whereNull('lotNumber')->get();
+        // return $request->lot_no;
         $last = Serial::all()->whereNull('lotNumber')->first();
-        $upto =  $last->id + $count  ;
-        // return $last->id;
-        // return gettype($last->id);
-        // return $upto;
-        // $update = Serial::where('id', '>=', $last->id)
-        //                 ->where('id', '<', $upto )
-        //                 ->get();
-        $update = Serial::whereBetween('id', [$last->id, $upto - 1])->get();
-        // $update = Serial::where
+        $upto =  $last->id + $count;
+        // $update = Serial::whereBetween('id', [$last->id, $upto - 1])->get();
+        $update = Serial::whereBetween('id', [$last->id, $upto - 1])->update(['lotNumber' => $request->lot_no]);
 
-        return $update;
+        if($update){
+            $storeLot = Lot::create($request->all());
+            if($storeLot){
+                return back()->with('success','Lot created successfully');
+            }
+            else{
+                return back()->with('errors',$errors);
+            }
+        }
         
 
         return $last;
