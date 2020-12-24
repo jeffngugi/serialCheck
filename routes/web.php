@@ -24,6 +24,7 @@ Route::middleware(['auth:sanctum', 'verified'])->get('/dashboard', [DashboardCon
 
 Route::post('/chck-serial', [SerialController::class,'check'])->name('chck-serial');
 Route::get('/print', [SerialController::class,'print'])->name('print');
+Route::post('/download', [SerialController::class,'download'])->name('download');
 Route::post('/print', [SerialController::class,'printCode'])->name('print');
 Route::get('/assign', [SerialController::class,'assign'])->name('assign');
 Route::resource('serials', SerialController::class);

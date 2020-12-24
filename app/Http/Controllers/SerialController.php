@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Validator;
-
+use Response;
 
 use App\Models\Serial;
 use App\Models\Lot;
@@ -150,9 +150,10 @@ class SerialController extends Controller
     }
 
     public function print(){
-        $lots = Lot::all();
+        $lots = Lot::orderBy('id', 'DESC')->get();
         return view('serials.print')->with('lots', $lots);
     }
+
 
     public function printCode(Request $request){
         $request['manufacture_date']= date("Y-m-d", strtotime($request->manufacture_date));
@@ -192,6 +193,35 @@ class SerialController extends Controller
 
         return $last;
         return 'logics to print codes';
+    }
+
+
+    public function download(Request $request){
+        $lotname = Lot::find($request->lot_id);
+        $serials = DB::table('serials')
+                ->where('serials.lotNumber','=', $lotname->lot_no)
+                ->select('serials.serialNumber', 'serials.pinNumber')
+                ->get();
+        $lots = Lot::all();
+        $content = "";
+
+        foreach($serials as $serial){
+            $content .= "sNO: ".$serial->serialNumber."|PinNo: ".$serial->pinNumber."|LotNo: ".$lotname->lot_no."|Mfg.Date ". $lotname->manufacture_date;
+            $content .="\n";
+        }
+
+        $filename = $lotname->lot_no;
+
+        $headers = [
+            'Content-type' => 'text/plain',
+            'Content-Disposition'=> sprintf('attachment; filename="%s"', $filename),
+        ];
+
+        return Response::make($content, 200, $headers);
+        return 'bla bla bla';
+        // $lt = $request->lot_id;
+        // $lot = Lot::find($lt);
+        // return $lot;
     }
 
     public function assign(){

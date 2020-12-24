@@ -116,13 +116,15 @@
                       <td>{{$data->count}}</td>
                       <td>{{$data->manufacture_date}}</td>
                       <td>
-                      
-                          <a class="btn btn-info btn-sm" href="#">
-                              <i class="fas fa-download">
+                      <form action="{{route('download')}}" method="post">
+                      @csrf
+                      <input type="hidden" value="{{$data->id}}" name="lot_id">
+                          <button type="submit" class="btn btn-primary mr-5 "><i class="fas fa-download">
                               </i>
                               Download
-                          </a>
-                         
+                          </button>
+                      </form>
+                          
                           
                           </td>
                     </tr>
