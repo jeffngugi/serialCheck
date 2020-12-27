@@ -66,4 +66,9 @@ class User extends Authenticatable
     {
         return $this->belongsTo(Role::class);
     }
+
+    public function lots()
+    {
+        return $this->hasMany(Lot::class);
+    }
 }

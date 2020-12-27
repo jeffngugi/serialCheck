@@ -18,11 +18,18 @@ class Lot extends Model
         'lot_no',
         'package',
         'manufacture_date',
-        'count'
+        'count',
+        'expiry_date',
+        'status'
     ];
 
-    public function users()
+    public function serials()
     {
         return $this->hasMany(Serial::class);
+    }
+
+    public function user()
+    {
+        return $this->belongsTo(User::class);
     }
 }

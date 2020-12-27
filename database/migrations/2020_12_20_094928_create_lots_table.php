@@ -18,7 +18,10 @@ class CreateLotsTable extends Migration
             $table->string('lot_no')->unique();
             $table->integer('package');
             $table->date('manufacture_date');
+            $table->date('expiry_date');
             $table->integer('count');
+            $table->boolean('status')->default(0);
+            $table->integer('user_id')->nullable();
             $table->softDeletes();
             $table->timestamps();
         });

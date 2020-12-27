@@ -16,9 +16,26 @@
               <form role="form" method="post" action="{{route('users.store')}}">
               @csrf
                 <div class="card-body">
+                <div class="row">
+
+                  <div class="col-6">
                   <div class="form-group">
-                    <label for="inputName">Names</label>
-                    <input type="text" class="form-control" id="inputName" placeholder="Enter User name" name="name">
+                    <label for="inputName">First Name</label>
+                    <input type="text" class="form-control" id="inputFirstname" placeholder="Enter first name" name="first_name">
+                  </div>
+                  </div>
+
+                  <div class="col-6">
+                  <div class="form-group">
+                                      <label for="inputName">Last Name</label>
+                                      <input type="text" class="form-control" id="inputLastname" placeholder="Enter last name" name="last_name">
+                                    </div>
+                  </div>
+                </div>
+
+                  <div class="form-group">
+                    <label for="inputName">User Name</label>
+                    <input type="text" class="form-control" id="inputUsername" placeholder="Enter User name" name="username">
                   </div>
 
                   <div class="form-group">

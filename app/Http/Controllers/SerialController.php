@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Validator;
 use Response;
+use Auth;   
 
 use App\Models\Serial;
 use App\Models\Lot;
@@ -157,13 +158,15 @@ class SerialController extends Controller
 
     public function printCode(Request $request){
         $request['manufacture_date']= date("Y-m-d", strtotime($request->manufacture_date));
+        $request['expiry_date']= date("Y-m-d", strtotime($request->expiry_date));
         // return $request->all();
         // validate data from the input
         $validator = Validator::make($request->all(), [
             'package' => 'required|integer',
-            'lot_no'=>'required|string',
+            'lot_no'=>'required|string|unique:lots',
             'count'=>'required|integer',
-            'manufacture_date'=>'required|date'
+            'manufacture_date'=>'required|date',
+            'expiry_date'=>'required|date',
 
             
         ]);
@@ -197,7 +200,9 @@ class SerialController extends Controller
 
 
     public function download(Request $request){
+        // return Auth::user()->id;
         $lotname = Lot::find($request->lot_id);
+        // return $request->lot_id;
         $serials = DB::table('serials')
                 ->where('serials.lotNumber','=', $lotname->lot_no)
                 ->select('serials.serialNumber', 'serials.pinNumber')
@@ -217,8 +222,12 @@ class SerialController extends Controller
             'Content-Disposition'=> sprintf('attachment; filename="%s"', $filename),
         ];
 
-        return Response::make($content, 200, $headers);
-        return 'bla bla bla';
+        $store = Response::make($content, 200, $headers);
+        if($store){
+            $updateLot = Lot::where('id', $request->lot_id)->update(['status'=>1,'user_id'=>Auth::user()->id]);
+            return $store;
+        }
+        
         // $lt = $request->lot_id;
         // $lot = Lot::find($lt);
         // return $lot;

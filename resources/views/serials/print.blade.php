@@ -36,14 +36,14 @@
                       </div>
                     </div>
 
-                    <div class="col-sm-3">
+                    <div class="col-sm-2">
                       <div class="form-group">
                         <label>Number to print</label>
                         <input type="text" class="form-control" placeholder="Enter" name='count'>
                       </div>
                     </div>
 
-                    <div class="col-sm-3">
+                    <div class="col-sm-2">
                         <div class="form-group">
                         <label>Manufacture date</label>
                             <div class="input-group date" id="reservationdate" data-target-input="nearest">
@@ -54,19 +54,23 @@
                             </div>
                         </div>
                     </div>
+                    <div class="col-sm-2">
+                        <div class="form-group">
+                        <label>Expiry date</label>
+                            <div class="input-group date" id="expirydate" data-target-input="nearest">
+                                <input type="text" class="form-control datetimepicker-input" data-target="#expirydate" name='expiry_date'/>
+                                <div class="input-group-append" data-target="#expirydate" data-toggle="datetimepicker">
+                                    <div class="input-group-text"><i class="fa fa-calendar"></i></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                     
                   </div>
                   <div class="card-footer">
                   <button type="submit" class="btn btn-primary mr-5 ">Submit</button>
                 </div>
-
-                 
-
                   <!-- input states -->
-                  
-                  
-                 
-
                 </form>
               </div>
             </div>
@@ -104,6 +108,8 @@
                       <th>Package</th>
                       <th>Total codes</th>
                       <th>Manufacture Date</th>
+                      <th>Exipiry Date</th>
+                      <th> Downloaded By</th>
                       <th>Actions</th>
                     </tr>
                   </thead>
@@ -115,14 +121,26 @@
                      <td>{{$data->package}} kg </td>
                       <td>{{$data->count}}</td>
                       <td>{{$data->manufacture_date}}</td>
+                      <td>{{$data->expiry_date}}</td>
+                      @if($data->status)
+                      <td>{{$data->user->name}}</td>
+                      @else
+                      <td>Not downloaded</td>
+                      @endif
+
                       <td>
                       <form action="{{route('download')}}" method="post">
                       @csrf
                       <input type="hidden" value="{{$data->id}}" name="lot_id">
-                          <button type="submit" class="btn btn-primary mr-5 "><i class="fas fa-download">
+                        @if($data->status)
+                        Downloaded
+                        @else
+                        <button type="submit" class="btn btn-primary mr-5 "><i class="fas fa-download">
                               </i>
                               Download
                           </button>
+                        @endif
+                          
                       </form>
                           
                           
