@@ -12,7 +12,8 @@
                   <thead>
                   <tr>
                     <th>#</th>
-                    <th>Name</th>
+                    <th>Full Names</th>
+                    <th>User Name</th>
                     <th>Email</th>
                     <th>Role</th>
                     <th class="text-center">Actions</th>
@@ -23,6 +24,7 @@
                   <tr>
                     <td>{{$data->id}}</td>
                     <td>{{$data->name}}</td>
+                    <td>{{$data->username}}</td>
                     <td>{{$data->email}}</td>
                     <td>
                       @if($data->role->name)
