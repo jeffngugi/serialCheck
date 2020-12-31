@@ -69,11 +69,19 @@ class SerialController extends Controller
         }
         // return $serials;
         // return $serials;
-        $serialEntry = Serial::insert($serials);
-        if($serialEntry){
-            // return 'Serials generated succesfully';
-            return redirect('/serials')->with('success', 'Serials generated succesfully');
-        }
+        foreach (array_chunk($serials,1000) as $t) {
+
+            // DB::table('tsim')->insert($t);
+            Serial::insert($t);
+
+
+         }
+         return 'success';
+        // $serialEntry = Serial::insert($serials);
+        // if($serialEntry){
+        //     // return 'Serials generated succesfully';
+        //     return redirect('/serials')->with('success', 'Serials generated succesfully');
+        // }
         
        
         // $randomNumber = rand(); 
