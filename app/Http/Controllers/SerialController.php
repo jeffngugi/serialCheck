@@ -143,7 +143,7 @@ class SerialController extends Controller
             $check->checked = true;
             $save = $check->save();
             if($save){
-                return redirect('/')->with('success', 'Success, serial verified');
+                return redirect('/')->with('success', 'Success, verified');
             }
         }else{
             return redirect('/')->with('failed', 'Serial number already used');
