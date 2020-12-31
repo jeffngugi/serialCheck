@@ -67,12 +67,7 @@
                 </a>
               </li>             
               
-              <li class="nav-item">
-                <a href="pages/layout/collapsed-sidebar.html" class="nav-link">
-                  <i class="far fa-circle nav-icon"></i>
-                  <p>Edit User</p>
-                </a>
-              </li>
+              
             </ul>
           </li>
           @if(Auth::user()->role_id < 2)
