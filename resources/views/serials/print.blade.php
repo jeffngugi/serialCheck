@@ -120,8 +120,8 @@
                       <td>{{$data->lot_no}}</td>
                      <td>{{$data->package}} kg </td>
                       <td>{{$data->count}}</td>
-                      <td>{{$data->manufacture_date}}</td>
-                      <td>{{$data->expiry_date}}</td>
+                      <td>{{date('d/m/Y', strtotime($data->manufacture_date))}}</td>
+                      <td>{{date('d/m/Y', strtotime($data->expiry_date))}}</td>
                       @if($data->status)
                       <td>{{$data->user->name}}</td>
                       @else
@@ -158,6 +158,9 @@
         </div>
         
 </section>
+
+@endsection
+@section('script')
 <script>
   $(function () {
     //Initialize Select2 Elements
@@ -186,7 +189,7 @@
       timePicker: true,
       timePickerIncrement: 30,
       locale: {
-        format: 'MM/DD/YYYY hh:mm A'
+        format: 'DD/MM/YYYY'
       }
     })
     //Date range as a button

@@ -20,7 +20,7 @@ class UserSeeder extends Seeder
             'name' => 'Geoffrey Mwathi',
             'email' => 'jeff@mail.com',
             'password' => Hash::make('password'),
-            'username'=>'jeff',
+            'phone'=>"0717031210",
             'role_id'=>1,
             'created_at'=>Carbon::now()
 

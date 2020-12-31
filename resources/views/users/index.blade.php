@@ -4,7 +4,9 @@
 
 <div class="card">
               <div class="card-header">
-                <h3 class="card-title">DataTable with default features</h3>
+                <h3 class="card-title">Users</h3>
+               
+               
               </div>
               <!-- /.card-header -->
               <div class="card-body">
@@ -13,8 +15,8 @@
                   <tr>
                     <th>#</th>
                     <th>Full Names</th>
-                    <th>User Name</th>
                     <th>Email</th>
+                    <th>Phone</th>
                     <th>Role</th>
                     <th class="text-center">Actions</th>
                   </tr>
@@ -24,8 +26,8 @@
                   <tr>
                     <td>{{$data->id}}</td>
                     <td>{{$data->name}}</td>
-                    <td>{{$data->username}}</td>
                     <td>{{$data->email}}</td>
+                    <td>{{$data->phone}}</td>
                     <td>
                       @if($data->role->name)
                     {{ $data->role->name }}
@@ -34,21 +36,19 @@
                     @endif
                   </td>
                     <td class="project-actions text-center">
-                    <a class="btn btn-primary btn-sm" href="{{ route('users.show', [$data->id]) }}">
-                              <i class="fas fa-folder">
-                              </i>
-                              View
-                          </a>
-                          <a class="btn btn-info btn-sm" href="#">
+                    <form action="{{ route('users.destroy', $data->id) }}" method="post">
+                          <a class="btn btn-info btn-sm" href="{!! route('users.edit', [$data->id]) !!}">
                               <i class="fas fa-pencil-alt">
                               </i>
                               Edit
                           </a>
-                          <a class="btn btn-danger btn-sm" href="#">
-                              <i class="fas fa-trash">
-                              </i>
-                              Delete
-                          </a>
+                          <button type="submit" class="btn btn-danger btn-sm" onclick="return confirm('User will be deleted?')">
+                          <i class="fas fa-trash"></i>Delete
+                          </button>
+                          @csrf
+                          @method('DELETE')
+                          </form>
+                          
                           
                     </td>
                   </tr>
@@ -60,4 +60,9 @@
               <!-- /.card-body -->
             </div>
 
+  
+
 @endsection
+
+
+

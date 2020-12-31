@@ -19,18 +19,21 @@
               </p>
             </a>
             <ul class="nav nav-treeview">
+            @if(Auth::user()->role_id < 2)
               <li class="nav-item">
                 <a href="{{ url('/serials') }}" class="nav-link">
                   <i class="far fa-circle nav-icon"></i>
                   <p>Generate</p>
                 </a>
               </li>
+              
               <li class="nav-item">
                 <a href="{{ url('/assign') }}" class="nav-link">
                   <i class="far fa-circle nav-icon"></i>
                   <p>Assign</p>
                 </a>
               </li>
+              @endif
               <li class="nav-item">
                 <a href="{{ url('/print') }}" class="nav-link">
                   <i class="far fa-circle nav-icon"></i>
@@ -40,7 +43,7 @@
               
             </ul>
           </li>
-
+          @if(Auth::user()->role_id <= 2)
           <li class="nav-item has-treeview">
             <a href="#" class="nav-link">
               <i class="nav-icon fas fa-user"></i>
@@ -72,6 +75,7 @@
               </li>
             </ul>
           </li>
+          @if(Auth::user()->role_id < 2)
           <li class="nav-item has-treeview">
             <a href="#" class="nav-link">
               <i class="nav-icon fas fa-chart-pie"></i>
@@ -96,6 +100,8 @@
               
             </ul>
           </li>
+          @endif
+          @endif
          
          
          

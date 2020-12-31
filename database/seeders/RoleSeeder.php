@@ -17,7 +17,7 @@ class RoleSeeder extends Seeder
         DB::table('roles')->insert([
             'name' => 'Super Admin',
             'code' => 'SUP01',
-            'description'=>'Can create all users and generates new codes',
+            'description'=>'Have all rights',
 
         ]);
 
@@ -25,6 +25,13 @@ class RoleSeeder extends Seeder
             'name' => 'Admin',
             'code' => 'ADM01',
             'description'=>'Creates users and downloads new codes',
+
+        ]);
+
+        DB::table('roles')->insert([
+            'name' => 'support',
+            'code' => 'SUP01',
+            'description'=>'Download/Prints codes',
 
         ]);
     }

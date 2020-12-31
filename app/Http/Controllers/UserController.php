@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Hash;
 use App\Models\User;
 use App\Models\Role;
 use Illuminate\Support\Facades\Validator;
@@ -41,12 +42,11 @@ class UserController extends Controller
      */
     public function store(Request $request)
     {
-        
         // return $request;
         $validator = Validator::make($request->all(), [
             'first_name' => ['required', 'string', 'max:255'],
             'last_name' => ['required', 'string', 'max:255'],
-            'username' => ['required', 'string', 'max:255'],
+            'phone' => 'required|regex:/(07)[0-9]{8}/',
             'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
             'password' => ['required', 'string', 'min:8',],
             'role_id' => ['required', 'integer',],
@@ -58,6 +58,8 @@ class UserController extends Controller
             // return $errors;
             return back()->with('errors',$errors);
         }
+
+        $request['password'] = Hash::make($request->password);
         $request['name'] = $request->first_name.' ' .$request->last_name;
         
         $data = $request->all();
@@ -87,7 +89,12 @@ class UserController extends Controller
      */
     public function edit($id)
     {
-        //
+        $roles = Role::all();
+        $user = User::find($id);
+        if(!$user){
+            return redirect('users')->with('error', 'User not found');
+        }
+        return view('users.edit')->with('user',$user)->with('roles', $roles);
     }
 
     /**
@@ -97,9 +104,26 @@ class UserController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, User $user)
     {
-        //
+        // return $user;
+        if(!$user){
+            return redirect('users')->with('error', 'User not found');
+        }
+        $validator = Validator::make($request->all(), [
+            'first_name' => ['required', 'string', 'max:255'],
+            'last_name' => ['required', 'string', 'max:255'],
+            'phone' => 'required|regex:/(07)[0-9]{8}/',
+            'email' => ['required', 'string', 'email', 'max:255', ],
+            'role_id' => ['required', 'integer',],
+        ]);
+        $request['name'] = $request->first_name.' ' .$request->last_name;
+      $update =  $user->update($request->all());
+        // return $update;
+        if($update){
+            return redirect('users')->with('success','User succesfully updated');
+        }
+        return $request;
     }
 
     /**
@@ -110,6 +134,13 @@ class UserController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $user = User::find($id);
+        if(!$user){
+            return redirect()->back()->with('error','User not found');
+        }
+        $del = $user->delete();
+        if($del){
+            return redirect()->back()->with('success','User successfully deleted');
+        }
     }
 }

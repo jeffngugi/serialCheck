@@ -5,6 +5,7 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Validator;
 use Response;
 use Auth;   
+use Carbon;
 
 use App\Models\Serial;
 use App\Models\Lot;
@@ -50,7 +51,7 @@ class SerialController extends Controller
         if(!$last){
             $sNumber = 1000000000;
         }else{
-        $sNumber = $last->pinNumber;
+        $sNumber = $last->serialNumber;
         }
         $count = $request->count;;
         $size =12;
@@ -58,14 +59,15 @@ class SerialController extends Controller
         $appendNo = '10';
         $serials = [];
         for($i = 0; $i < $count; $i++){
-            $serialNumber = mt_rand(1000000000, 9999999999);
+            $pinNumber = mt_rand(1000000000, 9999999999);
             // $serialNumber = strtoupper(substr(md5(time().rand(10000,99999)), 0, $size));
-            $serialArr['serialNumber'] = intval($append.$serialNumber);
-            $serialArr['pinNumber'] = $i + $sNumber;
+            $serialArr['pinNumber'] = intval($append.$pinNumber);
+            $serialArr['serialNumber'] = $i + $sNumber;
             $serialArr['checkCode'] = mt_rand(10000,99999);
             array_push($serials, $serialArr);
             
         }
+        // return $serials;
         // return $serials;
         $serialEntry = Serial::insert($serials);
         if($serialEntry){
@@ -124,7 +126,7 @@ class SerialController extends Controller
     }
 
     public function check(Request $request){
-        $check = Serial::where('serialNumber',$request->serialNumber)->whereNotNull('lotNumber')->first();
+        $check = Serial::where('pinNumber',$request->serialNumber)->whereNotNull('lotNumber')->first();
         // $check = Serial::where('serialNumber',$request->serialNumber)->first();
         // $check = Serial::where('serialNumber',$request->serialNumber)->where('pinNumber',$request->pinNumber)->first();
 
@@ -207,16 +209,17 @@ class SerialController extends Controller
                 ->where('serials.lotNumber','=', $lotname->lot_no)
                 ->select('serials.serialNumber', 'serials.pinNumber')
                 ->get();
+                
         $lots = Lot::all();
         $content = "";
 
         foreach($serials as $serial){
-            $content .= "sNO: ".$serial->serialNumber."|PinNo: ".$serial->pinNumber."|LotNo: ".$lotname->lot_no."|Mfg.Date ". $lotname->manufacture_date;
+            $content .= "SNo: ".$serial->serialNumber."|PinNo: ".$serial->pinNumber."|Lot No: ".$lotname->lot_no."|MFG: ". date('m/y', strtotime($lotname->manufacture_date))."|EXP ".date('m/y', strtotime($lotname->expiry_date));
             $content .="\n";
         }
 
         $filename = $lotname->lot_no;
-
+        // return $content;
         $headers = [
             'Content-type' => 'text/plain',
             'Content-Disposition'=> sprintf('attachment; filename="%s"', $filename),
