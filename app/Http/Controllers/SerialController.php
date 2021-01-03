@@ -20,7 +20,8 @@ class SerialController extends Controller
      */
     public function index()
     {
-        $serials = Serial::all();
+        // $serials = Serial::all();
+        $totalSerials = Serial::max('id');
         // return view('serial.index')->with('serails',$serials);
         // $serials = Serial::paginate(50);
         $totalSerials = Serial::count();
@@ -70,13 +71,9 @@ class SerialController extends Controller
         // return $serials;
         // return $serials;
         foreach (array_chunk($serials,1000) as $t) {
-
-            // DB::table('tsim')->insert($t);
             Serial::insert($t);
-
-
          }
-         return 'success';
+         return redirect('/serials')->with('success', 'Serials generated succesfully');
         // $serialEntry = Serial::insert($serials);
         // if($serialEntry){
         //     // return 'Serials generated succesfully';

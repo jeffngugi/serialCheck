@@ -9,9 +9,9 @@ class DashboardController extends Controller
 {
     public function index()
     {
-        $serials = Serial::all();
-        // return view('serial.index')->with('serails',$serials);
-        $totalSerials = Serial::count();
+        // $serials = Serial::all();
+        // $totalSerials = Serial::count();
+        $totalSerials = Serial::max('id');
         $totalDownload = Serial::whereNotNull('lotNumber')->count();
         $appovedCodes = Serial::where('checked', true)->count();
         // return view('home')->with('totalSerials', $totalSerials);
