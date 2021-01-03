@@ -20,10 +20,9 @@ class SerialController extends Controller
      */
     public function index()
     {
+        
         // $serials = Serial::all();
         $totalSerials = Serial::max('id');
-        // return view('serial.index')->with('serails',$serials);
-        // $serials = Serial::paginate(50);
         $totalSerials = Serial::count();
         // return $totalSerials;
         return view('serials.index')->with('totalSerials', $totalSerials);
