@@ -47,7 +47,10 @@ class SerialController extends Controller
     public function store(Request $request)
     {
         // return 'serial to be generated;';
-        $last = Serial::all()->last();
+        // $last = Serial::all()->last();
+        // $last = Serial::latest()->first();
+        $last = Serial::orderBy('id', 'DESC')->first();
+        // return $last;
         if(!$last){
             $sNumber = 1000000000;
         }else{
