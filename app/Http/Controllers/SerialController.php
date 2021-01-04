@@ -184,10 +184,12 @@ class SerialController extends Controller
         // return $request->all();
         $count = $request->count;
         // return $request->lot_no;
-        $last = Serial::all()->whereNull('lotNumber')->first();
-        $upto =  $last->id + $count;
+        // $last = Serial::all()->whereNull('lotNumber')->first();
+        $last = Serial::whereNull('lotNumber')->min('id');
+        // return $last->id;
+        $upto =  $last + $count;
         // $update = Serial::whereBetween('id', [$last->id, $upto - 1])->get();
-        $update = Serial::whereBetween('id', [$last->id, $upto - 1])->update(['lotNumber' => $request->lot_no]);
+        $update = Serial::whereBetween('id', [$last, $upto - 1])->update(['lotNumber' => $request->lot_no]);
 
         if($update){
             $storeLot = Lot::create($request->all());
