@@ -22,6 +22,7 @@ class UserSeeder extends Seeder
             'password' => Hash::make('password'),
             'phone'=>"0717031210",
             'role_id'=>1,
+            'pass_changed_at'=>Carbon::now(),
             'created_at'=>Carbon::now()
 
         ]);

@@ -15,7 +15,7 @@ class CreateLotsTable extends Migration
     {
         Schema::create('lots', function (Blueprint $table) {
             $table->id();
-            $table->string('lot_no')->unique();
+            $table->string('lot_no');
             $table->integer('package');
             $table->date('manufacture_date');
             $table->date('expiry_date');

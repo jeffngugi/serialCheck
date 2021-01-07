@@ -32,7 +32,12 @@ Route::match(['get', 'post'], 'register', function(){
     return redirect('/');
 });
 
+// Route::post('/change', UserController::class, 'change');
+Route::post('/change', [UserController::class,'change'])->name('change');
+Route::get('/change', [UserController::class,'changep'])->name('change');
+
 Route::middleware(['auth'])->group(function () {
+  Route::get('/logout', '\App\Http\Controllers\Auth\LoginController@logout');
     Route::get('/print', [SerialController::class,'print'])->name('print');
     Route::post('/download', [SerialController::class,'download'])->name('download');
     Route::post('/print', [SerialController::class,'printCode'])->name('print');

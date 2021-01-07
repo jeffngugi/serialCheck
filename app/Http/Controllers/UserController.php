@@ -1,11 +1,13 @@
 <?php
 
 namespace App\Http\Controllers;
-
+use Auth;
 use Illuminate\Http\Request;
 use Hash;
 use App\Models\User;
+use DB;
 use App\Models\Role;
+use Carbon\Carbon;
 use Illuminate\Support\Facades\Validator;
 
 class UserController extends Controller
@@ -48,7 +50,7 @@ class UserController extends Controller
             'last_name' => ['required', 'string', 'max:255'],
             'phone' => 'required|regex:/(07)[0-9]{8}/',
             'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
-            'password' => ['required', 'string', 'min:8',],
+            'password' => ['required', 'string', 'min:8','confirmed'],
             'role_id' => ['required', 'integer',],
             
         ]);
@@ -56,7 +58,7 @@ class UserController extends Controller
         if($validator->fails()){
             $errors =  $validator->messages();
             // return $errors;
-            return back()->with('errors',$errors);
+            return back()->withInput()->with('errors',$errors);
         }
 
         $request['password'] = Hash::make($request->password);
@@ -126,6 +128,34 @@ class UserController extends Controller
         return $request;
     }
 
+    public function change(Request $request){
+        // return $request;
+        $validator = Validator::make($request->all(), [
+            'old_password'=>['required', 'string'],
+            'password' => ['required', 'string', 'min:8','confirmed'],
+            
+        ]);
+        if(!Hash::check($request->old_password, Auth::user()->password)){
+            return redirect()->back()->with('error','Old password do not match' );
+        }
+        
+        if($validator->fails()){
+            $errors =  $validator->messages();
+            // return $errors;
+            return redirect()->back()->with('errors',$errors);
+        }
+        $update = DB::table('users')->where('id', Auth::user()->id)->update(['pass_changed_at'=>Carbon::now()]);
+       
+        if($update){
+            return redirect('/dashboard');
+        }
+    }
+
+    public function changep(Request $request){
+        return view('auth.change');
+    }
+
+    
     /**
      * Remove the specified resource from storage.
      *
@@ -134,9 +164,12 @@ class UserController extends Controller
      */
     public function destroy($id)
     {
+        if(Auth::user()->id == $id){
+            return redirect()->back()->with('success','Error: Can not self delete');
+        }
         $user = User::find($id);
         if(!$user){
-            return redirect()->back()->with('error','User not found');
+            return redirect()->back()->with('errors','User not found');
         }
         $del = $user->delete();
         if($del){

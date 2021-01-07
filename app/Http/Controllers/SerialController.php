@@ -38,7 +38,7 @@ class SerialController extends Controller
         return view('serials.index');
     }
 
-    /**
+    /**A
      * Store a newly created resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
@@ -166,19 +166,21 @@ class SerialController extends Controller
 
 
     public function printCode(Request $request){
+        
         $request['manufacture_date']= date("Y-m-d", strtotime($request->manufacture_date));
         $request['expiry_date']= date("Y-m-d", strtotime($request->expiry_date));
         // return $request->all();
         // validate data from the input
         $validator = Validator::make($request->all(), [
             'package' => 'required|integer',
-            'lot_no'=>'required|string|unique:lots',
+            'lot_no'=>'required|string',
             'count'=>'required|integer',
             'manufacture_date'=>'required|date',
             'expiry_date'=>'required|date',
 
             
         ]);
+        // return $request->all();
         if($validator->fails()){
             $errors =  $validator->messages();
             return back()->with('errors',$errors);
@@ -193,7 +195,7 @@ class SerialController extends Controller
         $upto =  $last + $count;
         // $update = Serial::whereBetween('id', [$last->id, $upto - 1])->get();
         $update = Serial::whereBetween('id', [$last, $upto - 1])->update(['lotNumber' => $request->lot_no]);
-
+        
         if($update){
             $storeLot = Lot::create($request->all());
             if($storeLot){
