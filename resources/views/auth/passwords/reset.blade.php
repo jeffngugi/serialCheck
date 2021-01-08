@@ -32,11 +32,14 @@
                     if (!isset($token)) {
                         $token = \Request::route('token');
                     }
+                if(!isset($email)){
+                    $email = $_GET['email'];
+                }
                 @endphp
-
+                <input type="hidden" name="email" value={{$email}}>
                 <input type="hidden" name="token" value="{{ $token }}">
 
-                <div class="input-group mb-3">
+                <!-- <div class="input-group mb-3">
                     <input type="email"
                            name="email"
                            class="form-control{{ $errors->has('email') ? ' is-invalid' : '' }}"
@@ -47,7 +50,7 @@
                     @if ($errors->has('email'))
                         <span class="error invalid-feedback">{{ $errors->first('email') }}</span>
                     @endif
-                </div>
+                </div> -->
 
                 <div class="input-group mb-3">
                     <input type="password"

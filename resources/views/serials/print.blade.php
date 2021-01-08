@@ -158,18 +158,11 @@
         </div>
         
 </section>
-
-@endsection
-@section('script')
+@push('scripts')
 <script>
   $(function () {
-    //Initialize Select2 Elements
-    $('.select2').select2()
 
-    //Initialize Select2 Elements
-    $('.select2bs4').select2({
-      theme: 'bootstrap4'
-    })
+  
 
     //Datemask dd/mm/yyyy
     $('#datemask').inputmask('dd/mm/yyyy', { 'placeholder': 'dd/mm/yyyy' })
@@ -180,8 +173,14 @@
 
     //Date range picker
     $('#reservationdate').datetimepicker({
-        format: 'L'
+        format: 'DD/MM/YYYY'
     });
+
+     //Date range picker
+     $('#expirydate').datetimepicker({
+        format: 'DD/MM/YYYY'
+    });
+
     //Date range picker
     $('#reservation').daterangepicker()
     //Date range picker with time picker
@@ -189,7 +188,7 @@
       timePicker: true,
       timePickerIncrement: 30,
       locale: {
-        format: 'DD/MM/YYYY'
+        format: 'MM/DD/YYYY hh:mm A'
       }
     })
     //Date range as a button
@@ -234,4 +233,6 @@
 
   })
 </script>
+@endpush
+
 @endsection

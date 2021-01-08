@@ -166,9 +166,12 @@ class SerialController extends Controller
 
 
     public function printCode(Request $request){
-        
-        $request['manufacture_date']= date("Y-m-d", strtotime($request->manufacture_date));
-        $request['expiry_date']= date("Y-m-d", strtotime($request->expiry_date));
+        // return $request;
+        $date1 = str_replace('/', '-', $request->manufacture_date);
+        $request['manufacture_date']= date("Y-m-d", strtotime(str_replace('/', '-', $request->manufacture_date)));
+        // $request['manufacture_date']= date("Y-m-d", strtotime($request->manufacture_date));
+        // $request['expiry_date']= date("Y-m-d", strtotime($request->expiry_date));
+        $request['expiry_date']= date("Y-m-d", strtotime(str_replace('/', '-', $request->expiry_date)));
         // return $request->all();
         // validate data from the input
         $validator = Validator::make($request->all(), [
