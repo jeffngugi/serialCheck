@@ -17,15 +17,15 @@
 </head>
 <body class="hold-transition login-page">
 <div class="login-box">
-    <div class="login-logo">
-        <a href="{{ url('/home') }}"><b>{{ config('app.name') }}</b></a>
-    </div>
+   
 
     <!-- /.login-logo -->
     <div class="card">
-        <div class="card-body login-card-body">
-            <p class="login-box-msg">You forgot your password? Here you can easily retrieve a new password.</p>
-
+        <div class="card-body login-card-body"  style="background-color:#f5f5f5;">
+            <div style="text-align:center;">
+            <h3>Forgot your Password?</h3>
+            <h6 class="login-box-msg">Please enter your email address. We’ll send you a reset code to change your password.</h6>
+            </div>
             @if (session('status'))
                 <div class="alert alert-success">
                     {{ session('status') }}
@@ -34,7 +34,7 @@
 
             <form action="{{ route('password.email') }}" method="post">
                 @csrf
-
+                <label for="Email">Email </label><code>*</code>
                 <div class="input-group mb-3">
                     <input type="email"
                            name="email"
@@ -50,13 +50,13 @@
 
                 <div class="row">
                     <div class="col-12">
-                        <button type="submit" class="btn btn-primary btn-block">Send Password Reset Link</button>
+                        <button type="submit" class="btn btn-info btn-block">Send </button>
                     </div>
                     <!-- /.col -->
                 </div>
             </form>
 
-            <p class="mt-3 mb-1">
+            <p class="mt-3 mb-1">Found your password? 
                 <a href="{{ route("login") }}">Login</a>
             </p>
             

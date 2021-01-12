@@ -100,10 +100,11 @@
               </div>
               <!-- /.card-header -->
               <div class="card-body table-responsive p-0">
-                <table class="table table-hover text-nowrap">
+                
+                <table id="example1" class="table table-bordered table-striped">
                   <thead>
-                    <tr>
-                      <th>ID</th>
+                  <tr>
+                  <th>ID</th>
                       <th>Lot Number</th>
                       <th>Package</th>
                       <th>Total codes</th>
@@ -111,10 +112,10 @@
                       <th>Exipiry Date</th>
                       <th> Downloaded By</th>
                       <th>Actions</th>
-                    </tr>
+                  </tr>
                   </thead>
                   <tbody>
-                      @foreach($lots as $data)
+                  @foreach($lots as $data)
                     <tr>
                       <td>{{$data->id}}</td>
                       <td>{{$data->lot_no}}</td>
@@ -147,8 +148,8 @@
                           </td>
                     </tr>
                     @endforeach
-                   
                   </tbody>
+                  
                 </table>
               </div>
               <!-- /.card-body -->
