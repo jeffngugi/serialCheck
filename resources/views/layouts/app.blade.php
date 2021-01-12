@@ -146,13 +146,14 @@
   $(function () {
     $("#example1").DataTable({
       "responsive": true,
-      "autoWidth": false,
+        "autoWidth": false,
+        "ordering": false,
     });
     $('#example2').DataTable({
       "paging": true,
       "lengthChange": false,
       "searching": false,
-      "ordering": true,
+      "ordering": false,
       "info": true,
       "autoWidth": false,
       "responsive": true,
