@@ -57,7 +57,7 @@
     <!-- /.login-box-body -->
     <div class="card">
         <div class="card-body login-card-body">
-            <p class="login-box-msg">Change Password to Continue</p>
+            <p class="login-box-msg">First time to login. Change Password to Continue</p>
 
             <form method="post" action="{{ url('/change') }}">
                 @csrf

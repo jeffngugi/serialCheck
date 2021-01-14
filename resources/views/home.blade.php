@@ -12,7 +12,7 @@
               <div class="info-box-content">
                 <span class="info-box-text">Generated Serials</span>
                 <span class="info-box-number">
-                  {{$totalSerials}}
+                  {{number_format($totalSerials)}}
                 </span>
               </div>
               <!-- /.info-box-content -->
@@ -26,7 +26,7 @@
 
               <div class="info-box-content">
                 <span class="info-box-text">Downloaded Codes</span>
-                <span class="info-box-number">{{$totalDownload}}</span>
+                <span class="info-box-number">{{number_format($totalDownload)}}</span>
               </div>
               <!-- /.info-box-content -->
             </div>
@@ -43,7 +43,7 @@
 
               <div class="info-box-content">
                 <span class="info-box-text">Codes Available</span>
-                <span class="info-box-number">{{$totalSerials - $totalDownload}}</span>
+                <span class="info-box-number">{{number_format($totalSerials - $totalDownload)}}</span>
               </div>
               <!-- /.info-box-content -->
             </div>
@@ -56,7 +56,7 @@
 
               <div class="info-box-content">
                 <span class="info-box-text">Approved Codes</span>
-                <span class="info-box-number">{{$appovedCodes}}</span>
+                <span class="info-box-number">{{number_format($appovedCodes)}}</span>
               </div>
               <!-- /.info-box-content -->
             </div>

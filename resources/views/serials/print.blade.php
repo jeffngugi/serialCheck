@@ -117,7 +117,7 @@
                       <td>{{$data->id}}</td>
                       <td>{{$data->lot_no}}</td>
                      <td>{{$data->package}} kg </td>
-                      <td>{{$data->count}}</td>
+                      <td>{{number_format($data->count)}}</td>
                       <td>{{date('d/m/Y', strtotime($data->manufacture_date))}}</td>
                       <td>{{date('d/m/Y', strtotime($data->expiry_date))}}</td>
                       @if($data->status)

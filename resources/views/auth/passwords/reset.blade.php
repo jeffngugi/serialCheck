@@ -18,7 +18,11 @@
 <body class="hold-transition login-page">
 <div class="login-box">
     <div class="login-logo">
-        <a href="{{ url('/home') }}"><b>{{ config('app.name') }}</b></a>
+        <a href="{{ url('/home') }}"><b><a href="{{ url('/home') }}">
+        <img src="/images/logo.jpg"
+             alt="AdminLTE Logo"
+             class="brand-image elevation-1 m-0">
+        </a></b></a>
     </div>
 
     <div class="card">
@@ -86,9 +90,7 @@
                 </div>
             </form>
 
-            <p class="mt-3 mb-1">
-                <a href="{{ route('login') }}">Login</a>
-            </p>
+            
         </div>
         <!-- /.login-card-body -->
     </div>

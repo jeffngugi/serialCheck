@@ -167,7 +167,7 @@ class SerialController extends Controller
         // validate data from the input
         $validator = Validator::make($request->all(), [
             'package' => 'required|integer',
-            'lot_no'=>'required|string',
+            'lot_no'=>'required|string|unique:lots',
             'count'=>'required|integer',
             'manufacture_date'=>'required|date',
             'expiry_date'=>'required|date',

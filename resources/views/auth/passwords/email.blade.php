@@ -21,10 +21,19 @@
 
     <!-- /.login-logo -->
     <div class="card">
-        <div class="card-body login-card-body"  style="background-color:#f5f5f5;">
+        <div class="card-body login-card-body"  style="background-color:#e9ecef;">
             <div style="text-align:center;">
-            <h3>Forgot your Password?</h3>
-            <h6 class="login-box-msg">Please enter your email address. We’ll send you a reset code to change your password.</h6>
+            <h3 style="    font-size: 24px;
+    font-weight: 400;
+    line-height: 1.3;
+    color: rgba(0,0,0,.87);
+    text-align: center;
+    margin-bottom: 24px;">Forgot your Password?</h3>
+            <small class="login-box-msg" style="font-size: 12px;
+    line-height: 1.7;
+    text-align: center;
+    color: #57687d;
+    margin-bottom: 13px;">Please enter your email address. We’ll send you a reset code to change your password.</small>
             </div>
             @if (session('status'))
                 <div class="alert alert-success">
@@ -39,7 +48,7 @@
                     <input type="email"
                            name="email"
                            class="form-control{{ $errors->has('email') ? ' is-invalid' : '' }}"
-                           placeholder="Email">
+                           placeholder="Enter your email address">
                     <div class="input-group-append">
                         <div class="input-group-text"><span class="fas fa-envelope"></span></div>
                     </div>
@@ -56,9 +65,7 @@
                 </div>
             </form>
 
-            <p class="mt-3 mb-1">Found your password? 
-                <a href="{{ route("login") }}">Login</a>
-            </p>
+           
             
         </div>
         <!-- /.login-card-body -->

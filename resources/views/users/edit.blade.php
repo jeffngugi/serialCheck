@@ -41,7 +41,7 @@
 
                   <div class="form-group">
                     <label for="inputEmail">Email</label>
-                    <input type="text" class="form-control" id="inputEmail" value="{{$user->email}}" name="username">
+                    <input type="text" class="form-control" id="inputEmail" value="{{$user->email}}" name="email">
                   </div>
 
                   <div class="form-group">

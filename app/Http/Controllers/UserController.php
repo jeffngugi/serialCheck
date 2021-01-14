@@ -106,9 +106,10 @@ class UserController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, User $user)
+    public function update(Request $request, $id)
     {
-        // return $user;
+        // return $request;
+        $user = User::find($id);
         if(!$user){
             return redirect('users')->with('error', 'User not found');
         }
@@ -116,11 +117,16 @@ class UserController extends Controller
             'first_name' => ['required', 'string', 'max:255'],
             'last_name' => ['required', 'string', 'max:255'],
             'phone' => 'required|regex:/(07)[0-9]{8}/',
-            'email' => ['required', 'string', 'email', 'max:255', ],
+            'email' => 'required|email|max:255|exists:users',
+            // 'email' => ['required', 'string', 'email', 'max:255','exists:users' ],
             'role_id' => ['required', 'integer',],
         ]);
         $request['name'] = $request->first_name.' ' .$request->last_name;
+    //   return  $request->all();
+    // return $user->id;
       $update =  $user->update($request->all());
+            // $user->email = $request->email;
+        // $user
         // return $update;
         if($update){
             return redirect('users')->with('success','User succesfully updated');

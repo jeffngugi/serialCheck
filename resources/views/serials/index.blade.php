@@ -3,13 +3,7 @@
 @section('content')
     
 <div mx-212>
-
-@if(session()->get('success'))
-    <div class="alert alert-success">
-      {{ session()->get('success') }}  
-    </div>
-  @endif
-<h3>Total Serials : {{ $totalSerials }}</h3>
+<h3>Total Serials : {{ number_format($totalSerials) }}</h3>
 <form role="form" action="{{route('serials.store')}}" method="post">
 @csrf
         <div class="card-body">
